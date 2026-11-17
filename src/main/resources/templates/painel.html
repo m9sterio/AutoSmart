@@ -1,0 +1,16 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head th:replace="~{fragments :: head('Painel')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Painel</h1>
+<div class="grid">
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','VENDEDOR')">Veículos disponíveis<div class="kpi" th:text="${disponiveis}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','VENDEDOR')">Reservados<div class="kpi" th:text="${reservados}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','VENDEDOR')">Propostas abertas<div class="kpi" th:text="${abertas}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','VENDEDOR')">Vendas<div class="kpi" th:text="${vendas}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','VENDEDOR')">Clientes ativos<div class="kpi" th:text="${clientes}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','VENDEDOR')">Oportunidades ativas<div class="kpi" th:text="${oportunidadesAtivas}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','VENDEDOR')">Oportunidades fechadas<div class="kpi" th:text="${oportunidadesFechadas}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','CONSULTOR','MECANICO')">OS em andamento/abertas<div class="kpi" th:text="${osAbertas}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','CONSULTOR','MECANICO')">OS encerradas<div class="kpi" th:text="${osEncerradas}"></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE','VENDEDOR','CONSULTOR')">Alertas pendentes<div class="kpi" th:text="${alertasPendentes}"></div></div></div>
+<div class="card" sec:authorize="hasAnyRole('ADMIN','GERENTE')"><h3>Auditoria (últimas ações)</h3><div class="tw"><table><tr><th>Data</th><th>Usuário</th><th>Ação</th></tr>
+<tr th:each="a:${log}"><td th:text="${#temporals.format(a.data,'dd/MM/yyyy HH:mm')}"></td><td th:text="${a.usuario}"></td><td th:text="${a.acao}"></td></tr></table></div></div>
+</main></body></html>

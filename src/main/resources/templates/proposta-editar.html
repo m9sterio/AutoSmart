@@ -1,0 +1,8 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Editar proposta')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Editar proposta</h1>
+<div class="card"><p th:text="'Proposta #'+${p.id}+' · '+${p.veiculo.descricao()}+' · Cliente: '+${p.cliente.nome}"></p>
+<form class="f" th:action="@{/propostas/{id}/editar(id=${p.id})}" method="post">
+<label>Desconto (R$)<input name="desconto" type="number" min="0" step="0.01" th:value="${p.desconto}" required></label>
+<label>Acessórios<input name="acessorios" th:value="${p.acessorios}"></label>
+<label>Validade<input name="validade" type="date" th:value="${p.validade}" required></label>
+<button class="p">Salvar nova versão</button></form></div><a th:href="@{/propostas}">Voltar</a></main></body></html>

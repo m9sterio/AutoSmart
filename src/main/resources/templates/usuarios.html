@@ -1,0 +1,7 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Usuários')}"></head><body><div th:replace="~{fragments :: nav}"></div><main><h1>Usuários e perfis (Administrador)</h1><div th:replace="~{fragments :: msgs}"></div>
+<div class="card"><form class="f" th:action="@{/usuarios}" method="post">
+<label>Nome<input name="nome" required></label><label>E-mail<input name="email" type="email" required></label><label>Senha<input name="senha" type="password" required minlength="12"></label>
+<label>Perfil<select name="perfil"><option th:each="p:${perfis}" th:value="${p}" th:text="${p}"></option></select></label><button class="p">Criar</button></form></div>
+<div class="card tw"><table><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Situação</th><th></th></tr>
+<tr th:each="u:${lista}"><td th:text="${u.nome}"></td><td th:text="${u.email}"></td><td th:text="${u.perfil}"></td><td th:text="${u.ativo}?'Ativo':'Inativo'"></td>
+<td><form th:action="@{/usuarios/{id}/alternar(id=${u.id})}" method="post"><button class="s" th:text="${u.ativo}?'Inativar':'Ativar'"></button></form></td></tr></table></div></main></body></html>

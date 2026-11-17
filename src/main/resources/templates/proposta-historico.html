@@ -1,0 +1,6 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Histórico da proposta')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Versões da proposta</h1><p th:text="'Proposta #'+${proposta.id}"></p>
+<div class="card tw"><table><tr><th>Versão</th><th>Data</th><th>Usuário</th><th>Ação</th><th>Status</th><th>Preço base</th><th>Valor</th><th>Desconto</th><th>Acessórios</th><th>Validade</th></tr>
+<tr th:each="h:${lista}"><td th:text="${h.versao}"></td><td th:text="${h.data}"></td><td th:text="${h.usuario}"></td><td th:text="${h.acao}"></td>
+<td th:text="${h.status}"></td><td th:text="${h.precoBase}"></td><td th:text="${h.valor}"></td><td th:text="${h.desconto}"></td><td th:text="${h.acessorios}"></td><td th:text="${h.validade}"></td></tr></table></div>
+<a th:href="@{/propostas}">Voltar</a></main></body></html>

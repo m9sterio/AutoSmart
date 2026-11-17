@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 public interface ClienteRepo extends JpaRepository<Cliente, Long> {
     List<Cliente> findByAtivoTrue();
     boolean existsByCpf(String cpf);
+    Optional<Cliente> findByCpf(String cpf);
     @Lock(LockModeType.PESSIMISTIC_WRITE) @Query("select c from Cliente c where c.id = :id")
     Optional<Cliente> bloquear(@Param("id") Long id);
 }

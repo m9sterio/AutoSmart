@@ -1,0 +1,6 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Editar cliente')}"></head><body><div th:replace="~{fragments :: nav}"></div><main><h1>Editar cliente</h1>
+<div class="card"><form class="f" th:action="@{/clientes/{id}/editar(id=${c.id})}" method="post">
+<label>Nome<input name="nome" th:value="${c.nome}" required></label><label>Telefone<input name="telefone" th:value="${c.telefone}"></label>
+<label>E-mail<input name="email" type="email" th:value="${c.email}"></label>
+<label>Cidade<select name="cidade"><option th:each="x:${cidades}" th:text="${x}" th:selected="${x==c.cidade}"></option></select></label>
+<button class="p">Salvar</button></form></div></main></body></html>

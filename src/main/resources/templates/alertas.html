@@ -1,0 +1,5 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Alertas')}"></head><body><div th:replace="~{fragments :: nav}"></div><main><h1>Alertas de acompanhamento</h1>
+<p>Alertas são sugestões: só saem da lista quando um usuário confirma a conclusão.</p>
+<div class="card tw"><table><tr><th>Data</th><th>Tipo</th><th>Mensagem</th><th>Responsável</th><th></th></tr>
+<tr th:each="a:${lista}"><td th:text="${a.data}"></td><td th:text="${a.tipo}"></td><td th:text="${a.mensagem}"></td><td th:text="${a.responsavel}"></td>
+<td><form th:action="@{/alertas/{id}/concluir(id=${a.id})}" method="post"><button class="p">Concluir</button></form></td></tr></table></div></main></body></html>

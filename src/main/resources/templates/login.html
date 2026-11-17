@@ -1,0 +1,7 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Login')}"></head>
+<body><main style="max-width:380px"><div class="card"><h1>AutoSmart</h1>
+<div class="err" th:if="${param.error}">Credenciais inválidas.</div>
+<form th:action="@{/login}" method="post" style="display:grid;gap:10px">
+<label>E-mail<input name="username" type="email" required autofocus></label>
+<label>Senha<input name="password" type="password" required></label>
+<button class="p">Entrar</button></form></div></main></body></html>

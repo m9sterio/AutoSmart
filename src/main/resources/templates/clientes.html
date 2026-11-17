@@ -1,0 +1,11 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Clientes')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Clientes</h1><div th:replace="~{fragments :: msgs}"></div>
+<p th:if="${clienteExistenteId}"><a th:href="@{/clientes/{id}/historico(id=${clienteExistenteId})}">Consultar cliente já cadastrado e seu histórico</a></p>
+<div class="card"><form class="f" th:action="@{/clientes}" method="post">
+<label>Nome<input name="nome" required></label><label>CPF<input name="cpf" required></label>
+<label>Telefone<input name="telefone"></label><label>Cidade<select name="cidade"><option th:each="x:${cidades}" th:text="${x}"></option></select></label><label>E-mail<input name="email" type="email"></label><button class="p">Cadastrar</button></form></div>
+<div class="card tw"><table><tr><th>Nome</th><th>CPF</th><th>Telefone</th><th>E-mail</th><th>Cidade</th><th>Situação</th><th></th></tr>
+<tr th:each="c:${lista}"><td th:text="${c.nome}"></td><td th:text="${c.cpf}"></td><td th:text="${c.telefone}"></td><td th:text="${c.email}"></td><td th:text="${c.cidade}"></td>
+<td th:text="${c.ativo}?'Ativo':'Inativo'"></td>
+<td><a th:href="@{/clientes/{id}/editar(id=${c.id})}">Editar</a> · <a th:href="@{/clientes/{id}/historico(id=${c.id})}">Histórico</a> <form th:if="${c.ativo}" th:action="@{/clientes/{id}/inativar(id=${c.id})}" method="post"><button class="s">Inativar</button></form></td></tr></table></div>
+</main></body></html>

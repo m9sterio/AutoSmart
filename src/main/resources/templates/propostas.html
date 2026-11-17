@@ -1,0 +1,16 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><head th:replace="~{fragments :: head('Propostas')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Propostas e vendas</h1><div th:replace="~{fragments :: msgs}"></div>
+<div class="card"><form class="f" th:action="@{/propostas}" method="post">
+<label>Cliente<select name="clienteId"><option th:each="c:${clientes}" th:value="${c.id}" th:text="${c.nome}" th:selected="${c.id==clienteId}"></option></select></label>
+<label>Veículo<select name="veiculoId"><option th:each="v:${veiculos}" th:value="${v.id}" th:text="${v.descricao()}" th:selected="${v.id==veiculoId}"></option></select></label>
+<label>Desconto (R$)<input name="desconto" type="number" step="0.01" value="0"></label><label>Acessórios<input name="acessorios"></label>
+<label>Validade<input name="validade" type="date" required></label><button class="p">Criar proposta</button></form></div>
+<div class="card tw"><table><tr><th>#</th><th>Cliente</th><th>Veículo</th><th>Valor</th><th>Validade</th><th>Responsável</th><th>Status</th><th>Ações</th></tr>
+<tr th:each="p:${lista}"><td th:text="${p.id}"></td><td th:text="${p.cliente.nome}"></td><td th:text="${p.veiculo.descricao()}"></td>
+<td th:text="${#numbers.formatDecimal(p.valor,1,'POINT',2,'COMMA')}"></td><td th:text="${p.validade}"></td><td th:text="${p.responsavel}"></td><td th:text="${p.status}"></td>
+<td><a th:href="@{/propostas/{id}/historico(id=${p.id})}">Versões</a> ·
+<a th:if="${p.status.name()=='ABERTA'}" th:href="@{/propostas/{id}/editar(id=${p.id})}">Editar</a>
+<th:block sec:authorize="hasAnyRole('ADMIN','GERENTE')" th:if="${p.status.name()=='ABERTA'}">
+<form th:action="@{/propostas/{id}/aprovar(id=${p.id})}" method="post" style="display:flex;gap:6px"><input name="entrega" type="date" required title="Data de entrega"><button class="p">Aprovar</button></form>
+<form th:action="@{/propostas/{id}/recusar(id=${p.id})}" method="post"><button class="s">Recusar</button></form></th:block></td></tr></table></div>
+</main></body></html>

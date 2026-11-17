@@ -1,0 +1,5 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Histórico do veículo')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Histórico do veículo</h1><p th:text="${veiculo.descricao()}"></p>
+<div class="card tw"><table><tr><th>Data</th><th>Usuário</th><th>Ação</th><th>Estado registrado</th></tr>
+<tr th:each="h:${lista}"><td th:text="${h.data}"></td><td th:text="${h.usuario}"></td><td th:text="${h.acao}"></td><td th:text="${h.dados}"></td></tr></table></div>
+<a th:href="@{/veiculos}">Voltar</a></main></body></html>

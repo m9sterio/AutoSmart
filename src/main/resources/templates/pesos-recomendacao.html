@@ -1,0 +1,12 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Pesos da recomendação')}"></head><body><div th:replace="~{fragments :: nav}"></div>
+<main><h1>Pesos da recomendação</h1><div th:replace="~{fragments :: msgs}"></div>
+<p>Apenas administradores podem alterar os pesos. A soma deve ser exatamente 100. A alteração vale para as próximas recomendações; os resultados históricos permanecem inalterados.</p>
+<div class="card"><form class="f" th:action="@{/configuracoes/recomendacao}" method="post">
+<label>Preço<input name="preco" type="number" min="0" max="100" required th:value="${pesos.preco}"></label>
+<label>Categoria<input name="categoria" type="number" min="0" max="100" required th:value="${pesos.categoria}"></label>
+<label>Câmbio<input name="cambio" type="number" min="0" max="100" required th:value="${pesos.cambio}"></label>
+<label>Ocupantes<input name="ocupantes" type="number" min="0" max="100" required th:value="${pesos.ocupantes}"></label>
+<label>Consumo<input name="consumo" type="number" min="0" max="100" required th:value="${pesos.consumo}"></label>
+<label>Finalidade<input name="finalidade" type="number" min="0" max="100" required th:value="${pesos.finalidade}"></label>
+<label>Prioridades<input name="prioridades" type="number" min="0" max="100" required th:value="${pesos.prioridades}"></label>
+<button class="p" type="submit">Salvar pesos</button></form></div></main></body></html>

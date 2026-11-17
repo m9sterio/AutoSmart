@@ -1,0 +1,9 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Histórico da recomendação')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Histórico das recomendações</h1>
+<p th:text="'Perfil #'+${perfil.id}+' · Cliente: '+${perfil.cliente.nome}"></p>
+<div class="card" th:each="r:${lista}"><h3 th:text="${r.classificacao}+'º · '+${r.veiculoDescricao}+' · '+${r.pontuacao}+'/100'"></h3>
+<p th:text="${r.data}+' · '+${r.usuario}"></p><p th:text="${r.perfilResumo}"></p>
+<strong>Fatores positivos</strong><pre class="reasons" th:text="${r.positivos}"></pre>
+<strong>Fatores de atenção</strong><pre class="reasons" th:text="${r.atencao}"></pre>
+<strong>Sem correspondência</strong><pre class="reasons" th:text="${r.semCorrespondencia}"></pre></div>
+<a th:href="@{/recomendacao}">Voltar</a></main></body></html>

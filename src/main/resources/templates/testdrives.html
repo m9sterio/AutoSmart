@@ -1,0 +1,9 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Test-drives')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Test-drives</h1><div th:replace="~{fragments :: msgs}"></div>
+<div class="card"><form class="f" th:action="@{/testdrives}" method="post">
+<label>Cliente<select name="clienteId"><option th:each="c:${clientes}" th:value="${c.id}" th:text="${c.nome}" th:selected="${c.id==clienteId}"></option></select></label>
+<label>Veículo<select name="veiculoId"><option th:each="v:${veiculos}" th:value="${v.id}" th:text="${v.descricao()}" th:selected="${v.id==veiculoId}"></option></select></label>
+<label>Data e hora<input name="inicio" type="datetime-local" required></label><button class="p">Agendar</button></form></div>
+<div class="card tw"><table><tr><th>Início</th><th>Veículo</th><th>Cliente</th><th>Vendedor</th></tr>
+<tr th:each="t:${lista}"><td th:text="${#temporals.format(t.inicio,'dd/MM/yyyy HH:mm')}"></td><td th:text="${t.veiculo.descricao()}"></td><td th:text="${t.cliente.nome}"></td><td th:text="${t.vendedor}"></td></tr></table></div>
+</main></body></html>

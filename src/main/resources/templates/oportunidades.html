@@ -1,0 +1,8 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Oportunidades')}"></head><body><div th:replace="~{fragments :: nav}"></div><main><h1>Oportunidades (funil)</h1>
+<div class="card"><form class="f" th:action="@{/oportunidades}" method="post">
+<label>Cliente<select name="clienteId"><option th:each="c:${clientes}" th:value="${c.id}" th:text="${c.nome}"></option></select></label>
+<label>Origem<select name="origem"><option>Site</option><option>Indicação</option><option>Loja</option><option>WhatsApp</option><option>Redes sociais</option></select></label>
+<label>Observações<input name="observacoes"></label><label>Próxima ação<input name="proximaAcao" type="date" required></label><button class="p">Registrar</button></form></div>
+<div class="card tw"><table><tr><th>Cliente</th><th>Origem</th><th>Etapa</th><th>Próxima ação</th><th>Observações</th><th>Responsável</th><th>Mover etapa</th></tr>
+<tr th:each="o:${lista}"><td th:text="${o.cliente.nome}"></td><td th:text="${o.origem}"></td><td th:text="${o.etapa}"></td><td th:text="${o.proximaAcao}"></td><td th:text="${o.observacoes}"></td><td th:text="${o.responsavel}"></td>
+<td><form th:action="@{/oportunidades/{id}/etapa(id=${o.id})}" method="post" style="display:flex;gap:4px"><select name="etapa"><option th:each="e:${etapas}" th:value="${e}" th:text="${e}" th:selected="${e==o.etapa}"></option></select><input name="proximaAcao" type="date"><button class="p">OK</button></form></td></tr></table></div></main></body></html>

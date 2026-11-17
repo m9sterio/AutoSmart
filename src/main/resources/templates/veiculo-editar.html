@@ -1,0 +1,21 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Editar veículo')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Editar veículo</h1><div th:replace="~{fragments :: msgs}"></div>
+<div class="card"><p th:text="'Status: '+${v.status}+' · ID: '+${v.id}"></p>
+<div class="foto-previa"><img th:src="${@imagensVeiculos.principal(v)}" th:attr="data-foto-local=${@imagensVeiculos.local(v)}" th:alt="${'Imagem ilustrativa de '+v.marca+' '+v.modelo}" onerror="this.onerror=null;this.src=this.dataset.fotoLocal;"><p class="foto-ajuda">Prévia da imagem na vitrine. Caso não tenha foto personalizada, usamos uma imagem ilustrativa local.</p></div>
+<form class="f" th:action="@{/veiculos/{id}/editar(id=${v.id})}" method="post">
+<label>Foto personalizada (URL HTTPS, opcional)<input name="fotoUrl" type="url" th:value="${v.fotoUrl}" placeholder="https://.../foto-do-veiculo.jpg"></label>
+<label>Marca<input name="marca" th:value="${v.marca}" required></label><label>Modelo<input name="modelo" th:value="${v.modelo}" required></label>
+<label>Versão<input name="versao" th:value="${v.versao}"></label><label>Cor<input name="cor" th:value="${v.cor}"></label>
+<label>Ano<input name="ano" type="number" min="1900" th:value="${v.ano}" required></label>
+<label>Km<input name="km" type="number" min="0" th:value="${v.km}" required></label>
+<label>Categoria<select name="categoria"><option th:each="x:${ {'Hatch','Sedan','SUV','Picape'} }" th:text="${x}" th:selected="${x==v.categoria}"></option></select></label>
+<label>Câmbio<select name="cambio"><option th:each="x:${ {'Manual','Automático'} }" th:text="${x}" th:selected="${x==v.cambio}"></option></select></label>
+<label>Lugares<input name="lugares" type="number" min="1" th:value="${v.lugares}" required></label>
+<label>Consumo (km/l)<input name="consumo" type="number" min="0" step="0.1" th:value="${v.consumo}" required></label>
+<label>Preço (R$)<input name="preco" type="number" min="0.01" step="0.01" th:value="${v.preco}" required></label>
+<label>Cidade<select name="cidade"><option th:each="x:${cidades}" th:text="${x}" th:selected="${x==v.cidade}"></option></select></label>
+<label>Localização<input name="localizacao" th:value="${v.localizacao}" required></label>
+<label>Finalidades (separadas por vírgulas)<input name="finalidades" th:value="${v.finalidades}" placeholder="Cidade, Família, Viagens"></label>
+<label>Características (separadas por vírgulas)<input name="caracteristicas" th:value="${v.caracteristicas}" placeholder="Ar-condicionado, Câmera de ré"></label>
+<button class="p">Salvar e registrar histórico</button></form></div>
+<a th:href="@{/veiculos}">Voltar</a></main></body></html>

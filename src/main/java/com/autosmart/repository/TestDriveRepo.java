@@ -12,8 +12,4 @@ import org.springframework.data.repository.query.Param;
 public interface TestDriveRepo extends JpaRepository<TestDrive, Long> {
     @Query("select count(t) > 0 from TestDrive t where t.veiculo.id = :id and t.inicio > :a and t.inicio < :b")
     boolean conflitoVeiculo(@Param("id") Long id, @Param("a") LocalDateTime a, @Param("b") LocalDateTime b);
-    @Query("select count(t) > 0 from TestDrive t where t.cliente.id = :id and t.inicio > :a and t.inicio < :b")
-    boolean conflitoCliente(@Param("id") Long id, @Param("a") LocalDateTime a, @Param("b") LocalDateTime b);
-    @Query("select count(t) > 0 from TestDrive t where t.vendedor = :email and t.inicio > :a and t.inicio < :b")
-    boolean conflitoVendedor(@Param("email") String email, @Param("a") LocalDateTime a, @Param("b") LocalDateTime b);
 }

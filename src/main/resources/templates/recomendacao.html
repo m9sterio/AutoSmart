@@ -1,0 +1,27 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Recomendação')}"></head>
+<body><div th:replace="~{fragments :: nav}"></div><main><h1>Recomendação explicável</h1>
+<div th:replace="~{fragments :: msgs}"></div>
+<div class="card"><strong>Perfis já cadastrados (revisar antes de recomendar)</strong>
+<ul><li th:each="p:${perfis}"><a th:href="@{/recomendacao(perfilId=${p.id})}" th:text="${p.cliente.nome}+' · perfil #'+${p.id}"></a> ·
+<a th:href="@{/recomendacao/historico/{id}(id=${p.id})}">Histórico</a></li></ul></div>
+<div class="card"><form class="f" th:action="@{/recomendacao}" method="post">
+<input th:if="${perfil != null}" type="hidden" name="perfilId" th:value="${perfil.id}">
+<label th:if="${perfil == null}">Cliente<select name="clienteId" required><option th:each="c:${clientes}" th:value="${c.id}" th:text="${c.nome}"></option></select></label>
+<label th:if="${perfil != null}">Cliente (perfil existente)<input th:value="${perfil.cliente.nome}" disabled><input type="hidden" name="clienteId" th:value="${perfil.cliente.id}"></label>
+<label>Orçamento (R$)<input name="orcamento" type="number" min="0.01" step="0.01" th:value="${perfil != null ? perfil.orcamento : null}" required></label>
+<label>Finalidade<select name="finalidade"><option th:each="x:${ {'Cidade','Família','Trabalho','Viagens'} }" th:text="${x}" th:selected="${perfil != null and x == perfil.finalidade}"></option></select></label>
+<label>Ocupantes<input name="ocupantes" type="number" th:value="${perfil != null ? perfil.ocupantes : 4}" min="1"></label>
+<label>Categoria<select name="categoria"><option th:each="x:${ {'Hatch','Sedan','SUV','Picape'} }" th:text="${x}" th:selected="${perfil != null and x == perfil.categoria}"></option></select></label>
+<label>Câmbio<select name="cambio"><option th:each="x:${ {'Manual','Automático'} }" th:text="${x}" th:selected="${perfil != null and x == perfil.cambio}"></option></select></label>
+<label>Consumo mínimo (km/l)<input name="consumoMin" type="number" min="0" step="0.1" th:value="${perfil != null ? perfil.consumoMin : 10}"></label>
+<label>Características prioritárias (separadas por vírgulas)<input name="prioridades" th:value="${perfil != null ? perfil.prioridades : ''}" placeholder="Econômico, Câmera de ré"></label>
+<button class="p" th:text="${perfil != null ? 'Revisar perfil e recomendar' : 'Registrar perfil e recomendar'}"></button></form></div>
+<th:block th:if="${resultado != null}">
+<p th:if="${resultado.isEmpty()}">Nenhum veículo disponível.</p>
+<div class="card" th:each="r,i:${resultado}">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><h3 th:text="${i.count}+'º · '+${r.veiculo.descricao()}"></h3><span class="score" th:text="${r.score()}+'/100'"></span></div>
+<p>R$ <span th:text="${#numbers.formatDecimal(r.veiculo.preco,1,'POINT',2,'COMMA')}"></span></p>
+<ul><li class="pos" th:each="t:${r.positivos()}" th:text="'✔ '+${t}"></li><li class="att" th:each="t:${r.atencao()}" th:text="'⚠ '+${t}"></li><li class="sem" th:each="t:${r.sem()}" th:text="'✘ '+${t}"></li></ul>
+<a th:href="@{/testdrives(clienteId=${perfil.cliente.id},veiculoId=${r.veiculo.id})}">Agendar test-drive</a> ·
+<a th:href="@{/propostas(clienteId=${perfil.cliente.id},veiculoId=${r.veiculo.id})}">Criar proposta</a></div></th:block>
+</main></body></html>

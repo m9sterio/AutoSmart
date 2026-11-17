@@ -1,0 +1,36 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Compre seu carro na Bahia')}"></head>
+<body class="site">
+<header class="top"><a class="logo" th:href="@{/}">Auto<span>Smart</span></a>
+<nav class="menu"><a href="#ofertas">Ofertas</a><a href="#veiculos">Veículos</a><a href="#como">Como funciona</a><a class="entrar" th:href="@{/painel}">Área do funcionário</a></nav></header>
+
+<section class="hero"><div class="hero-in">
+<div class="eyebrow">AUTOSMART · MOBILIDADE INTELIGENTE</div><h1>O próximo capítulo da sua história começa <em>na direção certa.</em></h1>
+<p>Encontre o veículo ideal, compare com recomendação inteligente e agende o test-drive.</p>
+<form class="search" th:action="@{/}" method="get">
+<label>Cidade<select name="cidade"><option value="">Todas as cidades</option><option th:each="c:${cidades}" th:value="${c}" th:text="${c}" th:selected="${c==cidade}"></option></select></label>
+<label>Categoria<select name="categoria"><option value="">Todas</option><option th:each="k:${ {'Hatch','Sedan','SUV','Picape'} }" th:value="${k}" th:text="${k}" th:selected="${k==categoria}"></option></select></label>
+<button class="btn big">Buscar veículos</button></form></div></section>
+
+<section id="ofertas" class="wrap"><h2>Ofertas e promoções</h2>
+<div class="promos">
+<div class="promo p1"><div><small>OFERTA DA SEMANA</small><h3>Seminovos revisados com garantia</h3><a class="btn light" href="#veiculos">Ver ofertas</a></div><img th:src="@{/img/veiculos/fiat-argo.webp}" alt="Imagem ilustrativa de um Fiat Argo"></div>
+<div class="promo p2"><div><small>EXPERIÊNCIA</small><h3>Test-drive sem fila, na sua cidade</h3><a class="btn light" th:href="@{/login}">Agendar agora</a></div><img th:src="@{/img/veiculos/volkswagen-t-cross.webp}" alt="Imagem ilustrativa de um SUV"></div>
+<div class="promo p3"><div><small>TROCA</small><h3>Avaliamos o seu usado na hora</h3><a class="btn light" th:href="@{/login}">Quero avaliar</a></div><img th:src="@{/img/veiculos/fiat-toro.webp}" alt="Imagem ilustrativa de uma picape"></div>
+</div></section>
+
+<section id="veiculos" class="wrap"><div class="section-heading"><div><span class="eyebrow dark">NOSSA SELEÇÃO</span><h2>Encontre seu próximo carro</h2><p>Compare modelos, preços e características em um só lugar.</p></div><span class="count" th:text="${lista.size()+' veículos encontrados'}"></span></div>
+<p th:if="${lista.isEmpty()}">Nenhum veículo encontrado para esse filtro.</p>
+<div class="vgrid"><article class="vcard" th:each="v:${lista}">
+<div class="vimg"><img loading="lazy" th:src="${@imagensVeiculos.principal(v)}" th:attr="data-foto-local=${@imagensVeiculos.local(v)}" th:alt="${'Imagem ilustrativa de '+v.marca+' '+v.modelo}" onerror="this.onerror=null;this.src=this.dataset.fotoLocal;"><span class="tag" th:text="${v.categoria}"></span></div>
+<div class="vbody"><h3 th:text="${v.marca+' '+v.modelo}"></h3><small th:text="${v.versao+' · '+v.ano+' · '+v.cambio}"></small><p class="specs" th:text="${#numbers.formatInteger(v.km,1,'POINT')+' km · '+v.cor}"></p>
+<p>📍 <span th:text="${v.cidade}"></span></p>
+<div class="price">R$ <span th:text="${#numbers.formatDecimal(v.preco,1,'POINT',2,'COMMA')}"></span></div>
+<a class="btn" th:href="@{/login}">Tenho interesse</a></div></article></div></section>
+
+<section id="como" class="wrap"><h2>Como funciona</h2><div class="steps">
+<div><b>1</b><h4>Conte o que você procura</h4><p>Informe orçamento, uso e preferências.</p></div>
+<div><b>2</b><h4>Veja a recomendação</h4><p>Ranking com os motivos de cada indicação.</p></div>
+<div><b>3</b><h4>Agende o test-drive</h4><p>Sem conflito de horário.</p></div>
+<div><b>4</b><h4>Feche a proposta</h4><p>Aprovada por uma pessoa da equipe.</p></div></div></section>
+<footer class="foot">© AutoSmart · Concessionárias na Bahia · Salvador · Feira de Santana · Vitória da Conquista · Camaçari · Ilhéus · Juazeiro</footer>
+</body></html>
